@@ -1,6 +1,4 @@
 hello world
-<<<<<<< HEAD
 hello
-=======
 one
->>>>>>> b4c5a8871e878a85202af56b44cfe23a69678981
+
