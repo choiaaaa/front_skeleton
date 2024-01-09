@@ -29,6 +29,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 //개발자가 각 파일로 분리시킨 라우터 등록..
+//http
 app.use('/', homeRouter)
 app.use('/users', userRouter)
 
