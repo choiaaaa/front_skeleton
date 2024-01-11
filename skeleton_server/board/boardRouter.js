@@ -9,4 +9,19 @@ router.get('/boardList', function (req, res, next) {
   });
 });
 
+router.post('/insert', function (req, res, next) {
+  //post 방식은 request body 를 통해서 데이터 전달하는 방식..
+  const data = req.body;
+  boardDAO.insert(data, (resp) => {
+    res.json(resp);
+  });
+});
+
+router.get('/board/:id', function (req, res, next) {
+  const id = req.params.id;
+  boardDAO.board(id, (resp) => {
+    res.json(resp);
+  });
+});
+
 module.exports = router;

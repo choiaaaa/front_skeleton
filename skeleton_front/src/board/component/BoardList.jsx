@@ -70,7 +70,11 @@ const BoardList = () => {
                   {boardList.data.map((board) => (
                     <tr key={board.id}>
                       <td>{board.id}</td>
-                      <td>{board.title}</td>
+                      <td>
+                        <Link to={'/board/detail/' + board.id}>
+                          {board.title}
+                        </Link>
+                      </td>
                       <td>{board.name}</td>
                       <td>{board.createdAt}</td>
                       <td>{board.cnt}</td>

@@ -5,27 +5,34 @@ import { useNavigate } from 'react-router-dom';
 const BoardInsert = () => {
   const navigate = useNavigate();
 
-  const [board, setBoard] = useState({ name: '', title: '', content: '' });
-  const changeData = useCallback(
+  const [boardContent, setBoardContent] = useState({
+    name: '',
+    title: '',
+    content: '',
+  });
+
+  const changeBoardContent = useCallback(
     (e) => {
-      setBoard({ ...board, [e.target.name]: e.target.value });
+      setBoardContent((boardContent) => ({
+        ...boardContent,
+        [e.target.name]: e.target.value,
+      }));
     },
-    [board]
+    [boardContent]
   );
 
-  //등록 버튼 클릭시에..
-  const insertBoard = useCallback(
+  const addBoardContent = useCallback(
     async (e) => {
       e.preventDefault();
-      await axios.post('http://localhost:8000/boards/insert', board);
-      //화면을 자동으로 목록으로..
+      await axios.post('http://localhost:8000/boards/insert', boardContent);
       navigate('/board/list');
     },
-    [navigate, board]
+    [navigate, boardContent]
   );
 
   return (
     <main id="main">
+      {/* <!-- ======= Intro Single ======= --> */}
       <section className="intro-single">
         <div className="container">
           <div className="row">
@@ -66,8 +73,8 @@ const BoardInsert = () => {
                         type="text"
                         className="form-control"
                         name="name"
-                        value={board.name}
-                        onChange={changeData}
+                        value={boardContent.name}
+                        onChange={changeBoardContent}
                       />
                     </td>
                   </tr>
@@ -78,8 +85,8 @@ const BoardInsert = () => {
                         type="text"
                         className="form-control"
                         name="title"
-                        value={board.title}
-                        onChange={changeData}
+                        value={boardContent.title}
+                        onChange={changeBoardContent}
                       />
                     </td>
                   </tr>
@@ -91,13 +98,13 @@ const BoardInsert = () => {
                         rows="10"
                         name="content"
                         className="form-control"
-                        value={board.content}
-                        onChange={changeData}
+                        value={boardContent.content}
+                        onChange={changeBoardContent}
                       ></textarea>
                     </td>
                   </tr>
                   <tr>
-                    <td colSpan="2" className="text-end">
+                    <td colSpan={2} className="text-end">
                       <button
                         type="button"
                         className="btn btn-primary btn-sm"
@@ -108,7 +115,7 @@ const BoardInsert = () => {
                       <button
                         type="submit"
                         className="btn btn-warning btn-sm"
-                        onClick={insertBoard}
+                        onClick={addBoardContent}
                       >
                         입력
                       </button>
