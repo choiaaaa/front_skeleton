@@ -24,15 +24,15 @@ const Header = () => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link " href="about.html">About</Link>
+            <Link className="nav-link" to="/user/signup">SignUp</Link>
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link " href="property-grid.html">Property</Link>
+            <Link className="nav-link " to="/user/signin">Login</Link>
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link " href="blog-grid.html">Blog</Link>
+            <Link className="nav-link " to="/board/list">board</Link>
           </li>
 
           <li className="nav-item dropdown">

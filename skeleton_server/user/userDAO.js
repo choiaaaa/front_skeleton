@@ -49,6 +49,43 @@ const userDAO = {
       if(conn !==null) conn.release()
 
     }
+  },
+  login: async (item, callback) => {
+    //유저 입력 데이터..획득..
+    const {email, password} = item
+    let conn=null
+    try{
+      console.log('00')
+      conn = await getPool(). getConnection()
+      console.log('11')
+      //sql 실행
+      const [user] = await conn.query(sql.checkId,[email])
+      console.log('22', user)
+      if(!user[0]){
+        //db에 데이터가 없다는 이야기..유저가 입력한 이메일이 잘못 되었다는 이야기
+        callback({status:500, message:'아이디, 패스워드를 확인해 주세요.'})
+      }else {
+        //db 데이터 있다는 이야기.. 유저 입력 비밀번호와 db에서 뽑은 비밀번호 비교
+        console.log('33', password, user[0]. password)
+        //db에 비밀번호가 해시로 저장되어 있어서..
+        //유저 입력 비밀번호를 해시로 만들어 비교해야 한다..
+        bcrypt.compare(password, user[0].password, async (error, result)=>{
+          if(error){
+            callback({status:500, message:'아이디, 패스워드를 확인해 주세요'})
+          }else if(result){
+            console.log('44')
+            callback({status:200, message:'OK',
+              data:{name: user[0].name}, email: user[0].email})
+          }else {
+            callback({status:500, message: '아이디, 패스워드를 확인해 주세요'})
+          }
+        })
+      }
+    }catch(e){
+      return{status:500, message:'로그인 실패', error:error}
+    }finally{
+      if(conn !==null) conn.release()
+    }
   }
 }
 
